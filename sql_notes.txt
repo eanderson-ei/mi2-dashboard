@@ -1,0 +1,23 @@
+CREATE TABLE workstreams (
+    id                 NOT NULL
+                       PRIMARY KEY,
+    focal_area_id      NOT NULL,
+    goings_on_id not null,
+    workstream    TEXT,
+    FOREIGN KEY (
+        focal_area_id
+    )
+    REFERENCES focal_areas (id),
+    foreign key (goings_on_id) references fab_goings_on (id)
+);
+
+CREATE TABLE IF NOT EXISTS action_plans (
+    id                 NOT NULL
+                       PRIMARY KEY,
+    workstream_id      NOT NULL,
+    action_plan     TEXT,
+    FOREIGN KEY (
+        workstream_id
+    )
+    REFERENCES workstreams (id) 
+);

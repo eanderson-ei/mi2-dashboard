@@ -1,0 +1,9 @@
+data/external/*
+!data/external/related-products.md
+data/interim/
+notebooks/
+.ipynb_checkpoints
+test.db
+secrets/*
+!secrets/.keep
+__pycache__
