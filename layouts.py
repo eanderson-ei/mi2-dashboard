@@ -1,6 +1,15 @@
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
+from components import functions
+import pandas as pd
+
+focal_areas = ['1. DIRECT FIELD SUPPORT', '2. CROSS MISSION LEARNING GROUPS', '3. EVIDENCE-BASED PRACTICE',
+              '4. BUSINESS PROCESSES AND INTEGRATION', '5. CAPACITY DEVELOPMENT AND ADULT LEARNING', 
+              '6. KNOWLEDGE MANAGEMENT, LEARNING, AND EVALUATION', '7. PROJECT MANAGEMENT']
+comparison = pd.read_csv('data/processed/comparison.csv', index_col=0)
+filt = (comparison['complete']>0) | (comparison['Approved']>0) | (comparison['Billed']>0)
+comparison_clean = comparison.loc[filt, :].copy()
 
 # Nav Bar
 LOGO = "assets/ei-logo-white.png"
@@ -69,25 +78,32 @@ layout_main = html.Div([
 ])
 
 # Annual Work Plan Layout
+styles = {
+    'pre': {
+        'border': 'thin lightgrey solid',
+        'overflowX': 'scroll'
+    }
+}
+
 layout1 = html.Div([
     navbar,
     dbc.Container(
         dbc.Row(
             [
                 dbc.Col(html.Div(), width=1),
-                dbc.Col(html.Div([
-                    html.H3('App 2'),
-                    dcc.Dropdown(
-                        id='app-2-dropdown',
-                        options=[
-                            {'label': 'App 2 - {}'.format(i), 'value': i} for i in [
-                                'NYC', 'MTL', 'LA'
-                            ]
-                        ]
-                    ),
-                    html.Div(id='app-2-display-value')
-                    ])),
-                dbc.Col(html.Div(), width=1),
+                dbc.Col(html.Div(
+                    [
+                    html.H1('Annual Work Plan'),
+                    dcc.Graph(id='complete-fa',
+                              figure=functions.update_chart(
+                                  comparison_clean, 
+                                  'Focal Area', 
+                                  focal_areas
+                                  )
+                              )
+                    ])
+                ),
+                dbc.Col(html.Div(), width=1)
             ]
         )
     )

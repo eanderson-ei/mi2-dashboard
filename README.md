@@ -2,13 +2,13 @@
 
 This library supports the MI2 Completion vs. Expended dashboard. Currently the library supports the Annual Work Plan view, but eventually will support the entire life of project.
 
-To run, use `python index.py`
+To run, use `python index.py`. Also available at [mi2-dashboard.herokuapp.com](https://mi2-dashboard.herokuapp.com/).
 
 ## Contents
 
 **app.py**: barebones Dash app with authentication
 
-**index.py**: 'home' page of the app
+**index.py**: 'home' page of the app that handles page navigation
 
 **layouts.py**: includes all layouts and bootstrap components
 
@@ -33,7 +33,7 @@ To run, use `python index.py`
 
 * **processed**/
 
-  * includes all 'tidy' datasets from the BVA and MI2-wide tracker. Committed to GitHub so that raw versions can be used as input for web-based dashboard as interim solution. Eventually, up-to-date data will need to be piped in from ERP and MI2-wide tracker.
+  * includes all normalized datasets from the BVA and MI2-wide tracker. Committed to GitHub so that raw versions can be used as input for web-based dashboard as interim solution (may not need to though). Eventually, up-to-date data will need to be piped in from ERP and MI2-wide tracker or MI2 Database.
 
 * **raw/**
 
@@ -50,7 +50,8 @@ To run, use `python index.py`
 
 **notebooks/**
 
-* exploratory notebooks. All `read-*` notebooks are replicated as scripts in `scripts/`.
+* exploratory notebooks for data processing. All `read-*` notebooks are replicated as scripts in `scripts/`.
+* exploratory notebooks for charts with plotly.
 
 **scripts/**
 
@@ -96,17 +97,29 @@ Building the database in SQLite Studio was a good way of developing the SQL code
 
 ---
 
-Using [Bootstrap](https://dash-bootstrap-components.opensource.faculty.ai/) components for better look and feel.
+Using [Bootstrap](https://dash-bootstrap-components.opensource.faculty.ai/) components for better look and feel. There are multiple [themes](https://www.bootstrapcdn.com/bootswatch/) available for free (and some paid). I picked [FLATLY](https://bootswatch.com/flatly/) for this project.
 
 ---
 
+Concat **workstream products** (na for Mission lead), **cross mission products** (make LAC Lead : Mission Lead), **field support units** (name in mi2-wide tracker is operating unit, MI Lead is POC: MI, FAB Lead is POC: FAB, LAC lead is POC: Mission; note completeness is empty, add Focal Area = 1. DIRECT FIELD SUPPORT), **buy in products**. Join with BVA using xtracker as dict (1:M relationship, check uniqueness of product as key, confirm len of products is same before and after)
 
+The key to bva is workstream products: Workstream or Product #, cross mission learning: Workstream (but all caps), field support: 'MI2_Tracker_ID', buy_in: Task for some (e.g., Columbia, but that columns has N/As).
+
+---
+
+Average all completeness along xbva attribute (xbva, % complete)
+
+Join MI2 BVA column
+
+Average again (bad) across al MI2 BVA columns
 
 ## Next Steps
 
 - [x] develop database schema
 - [x] create ERD and send to Elma w/ narrative
 - [x] explore visuals as specified in the PD with plotly (using csv's)
+- [ ] send Elma/Shelly a flat file with Annual work plan data needs
+- [ ] schedule call with Elma/Shelly
 - [ ] develop Annual Work Plan visuals and other dashboard components in notebooks 
 - [ ] Lay out dashboard design in Dash and convert notebook plots with widgets.
 - [ ] Deploy to Heroku
@@ -121,22 +134,27 @@ Using [Bootstrap](https://dash-bootstrap-components.opensource.faculty.ai/) comp
 
 # Notes for EI-Dev
 
+### Starting a Dash project
+
 How to start a Dash project
 
 ```bash
 conda create --new <project name>
 conda activate <project name>
 pip install dash==1.11.0  # use most recent version from Users Guide
-pip install plotly==4.6.0 # this will already be installed with Dash
 pip install dash-auth==1.3.2  # for basic login protection
 pip install requests  # this is not included in the docs, not sure why it isn't installed as a dependency, but it cleared things up
 pip install dash-bootstrap-components  # if using Bootstrap
 ```
 
-The structure used by David Comfort in his [medium post](https://towardsdatascience.com/how-to-build-a-complex-reporting-dashboard-using-dash-and-plotl-4f4257c18a7f) is:
+I use pip for installing packages rather than conda because Heroku uses pip and I find it leads to fewer errors.
+
+### Structure
+
+I'm building this [multi-page app](https://dash.plotly.com/urls) with insights provided by David Comfort in his [medium post](https://towardsdatascience.com/how-to-build-a-complex-reporting-dashboard-using-dash-and-plotl-4f4257c18a7f). The structure used by David Comfort  is:
 
 ```
-- __init__.py  # not sure this is needed
+- __init__.py  # not sure this is needed, I left it out
 - app.py
 - assets
     |-- logo.jpeg
@@ -156,7 +174,7 @@ The structure used by David Comfort in his [medium post](https://towardsdatascie
 - requirements.txt
 ```
 
-The **app.p**y file is simply:
+The **app.py** file simply initiates the app and handles authorization. Note that with a multipage app, **app.py** is not longer the primary file called to run the app, **index.py** is.
 
 ```python
 import dash
@@ -165,9 +183,9 @@ import dash_auth
 import json
 import os
 
-external_stylesheets = [dbc.themes.BOOTSTRAP]
+external_stylesheets = [dbc.themes.FLATLY]
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets, url_base_pathname='/cc-travel-report/paid-search/')
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 server = app.server
 
@@ -189,9 +207,9 @@ auth = dash_auth.BasicAuth(
 )
 ```
 
-I'm using dash bootstrap components for this project, so need to include a bootstrap css as the external stylesheets.
+I'm using [dash bootstrap components](https://dash-bootstrap-components.opensource.faculty.ai/) for this project, so need to include a bootstrap css as the external stylesheets. I picked [FLATLY](https://bootswatch.com/flatly/) for this project.
 
-For authentication, save a json file in `secrets/` with the following code (INCLUDE THIS IN YOUR GITIGNORE. Note I also include a .keep file in there so people who clone the repo know where that should be.) You can include as many username, password pairs as you want, separated by a comma.
+For authentication, save a `.json` file in `secrets/` with the following code (INCLUDE THIS FILE IN YOUR GITIGNORE. Note I also include a .keep file in there so people who clone the repo know where that should be.) You can include as many username, password pairs as you want, separated by a comma.
 
 ```json
 {
@@ -199,7 +217,7 @@ For authentication, save a json file in `secrets/` with the following code (INCL
 }
 ```
 
-When deploying to Heroku, go to the Config Vars option under 'Settings' and paste the json there. The `KEY` will be `VALID_USERNAME_PASSWORD_PAIRS` and the `Value` will be the contents of the json file.
+When deploying to Heroku, go to the Config Vars option under 'Settings' and paste the content of the json file there. The `KEY` will be `VALID_USERNAME_PASSWORD_PAIRS` and the `VALUE` will be the contents of the json file.
 
 The try/except block allows the same code to work in both environments. Note you could save the passwords within a system environment variable locally, but I find that messy.
 
@@ -259,7 +277,7 @@ if __name__ == '__main__':
 
 The `app.index_string` variable allows us to change the name in the internet browser tab to 'MI2 Dashboard' by specifying the <title> tag.
 
-Store a logo, favicon, and custom css or javascript in a folder `./assets/` and they will automatically be discovered by Dash. Save the external stylesheet as your css if you want to edit or amend it. See [docs](https://dash.plotly.com/external-resources) for more. Note that David Comfort found the css files unavailable on Heroku when using`dash_auth` and so saved them to codepen.io.
+Store a logo, favicon, and custom css or javascript in a folder `./assets/` and they will automatically be discovered by Dash. Save the external stylesheet as your css if you want to edit or amend it. See [docs](https://dash.plotly.com/external-resources) for more. Note that David Comfort found the css files unavailable on Heroku when using`dash_auth` and so saved them to codepen.io. Using, bootstrap, I had no issues.
 
 I wasn't sure how the index.py file resolved the landing page, so I amended the callback to be:
 
@@ -279,10 +297,58 @@ def display_page(pathname):
 
 Note I also imported layout_main from `layouts`.
 
-Handling data: David Comfort was able to keep data directly in his data directory when deploying to Heroku. I'll give that a shot also.
+### Handling data
 
-Ideas:
+David Comfort was able to keep data directly in his data directory when deploying to Heroku. I'll give that a shot also.
 
-* If Heroku fails, try adding an init file to the root. 
+### Deploying to Heroku
+
+I deployed as soon as the structure was built to make it easier to debug the deployment. Here are the steps:
+
+* Make sure app.py includes (after defining variable app)
+
+  ```python
+  server = app.server
+  ```
+
+* Create Procfile with contents. We're running from index, rather than app.
+
+  ```
+  web: gunicorn index:server
+  ```
+
+  Note no space after `index:`
+
+* Install gunicorn if not already installed
+
+  ```bash
+  pip install gunicorn
+  ```
+
+  Create requirements.txt
+
+  * `pip freeze>requirements.txt`
+  * You can also list the key dependencies in a text file called requirements.txt. Should set up a pip or conda environment though.
+
+* Create a heroku project
+
+* ```bash
+  heroku create <app name>
+  ```
+
+* Use Heroku to deploy
+
+  ```bash
+  git add .
+  git commit -m "<message>"
+  git push origin master
+  heroku create <app name>
+  git push heroku master
+  heroku ps:scale web=1
+  ```
+
+
+
+### Ideas
+
 * Define a Header() function that returns front matter for each layout so you don't have to repeat it. Include logos, etc.
-* Get the App on Heroku as soon as the structure is roughed out so you can more easily de-bug.

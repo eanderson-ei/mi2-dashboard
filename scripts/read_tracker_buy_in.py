@@ -33,7 +33,7 @@ buy_ins.reset_index(drop=True, inplace=True)
 buy_ins.to_csv('data/processed/buy-in.csv')
 
 # fill buy in table
-buy_in_filled = fill_down(buy_in_raw, buy_in_raw.columns[:7])
+buy_in_filled = fill_down(buy_in_raw, buy_in_raw.columns[:8])
 
 ### buy-in tasks
 buy_in_tasks = buy_in_filled.loc[:, ['Buy-In', 'Task', 'Product Name']].copy()
