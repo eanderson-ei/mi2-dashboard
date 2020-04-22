@@ -16,19 +16,6 @@ focal_areas = ['1. DIRECT FIELD SUPPORT', '2. CROSS MISSION LEARNING GROUPS', '3
 
 buy_ins = [buy_in for buy_in in comparison_clean['Focal Area'].unique() if buy_in not in focal_areas]
 
-@app.callback(
-    Output('app-1-display-value', 'children'),
-    [Input('app-1-dropdown', 'value')])
-def display_value(value):
-    return 'You have selected "{}"'.format(value)
-
-@app.callback(
-    Output('app-2-display-value', 'children'),
-    [Input('app-2-dropdown', 'value')])
-def display_value(value):
-    return 'You have selected "{}"'.format(value)
-
-
 # Nav bar 
 @app.callback(
     Output("navbar-collapse", "is_open"),
