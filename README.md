@@ -20,6 +20,11 @@ To run, use `python index.py`. Also available at [mi2-dashboard.herokuapp.com](h
 
 * this folder is automatically detected by Dash (as named) and includes a favicon and logo image files
 
+**components/**
+
+* **\_\_init\_\_.py**: allows importing from components
+* **functions.py**: all functions, notably functions to create plots and manipulate data
+
 **data/**
 
 * **external/**
@@ -101,17 +106,17 @@ Using [Bootstrap](https://dash-bootstrap-components.opensource.faculty.ai/) comp
 
 ---
 
+Getting a flat file from workstream products, cm products, field support units, and buyins requires renaming one column in each as the 'key' and concatenating rows. I rename the columns that represent the same data but aren't named the same (e.g., Status and Product Status), but don't worry about columns in only a single table.
+
+Here's the process:
+
 Concat **workstream products** (na for Mission lead), **cross mission products** (make LAC Lead : Mission Lead), **field support units** (name in mi2-wide tracker is operating unit, MI Lead is POC: MI, FAB Lead is POC: FAB, LAC lead is POC: Mission; note completeness is empty, add Focal Area = 1. DIRECT FIELD SUPPORT), **buy in products**. Join with BVA using xtracker as dict (1:M relationship, check uniqueness of product as key, confirm len of products is same before and after)
 
 The key to bva is workstream products: Workstream or Product #, cross mission learning: Workstream (but all caps), field support: 'MI2_Tracker_ID', buy_in: Task for some (e.g., Columbia, but that columns has N/As).
 
 ---
 
-Average all completeness along xbva attribute (xbva, % complete)
 
-Join MI2 BVA column
-
-Average again (bad) across al MI2 BVA columns
 
 ## Next Steps
 
@@ -120,13 +125,14 @@ Average again (bad) across al MI2 BVA columns
 - [x] explore visuals as specified in the PD with plotly (using csv's)
 - [ ] send Elma/Shelly a flat file with Annual work plan data needs
 - [ ] schedule call with Elma/Shelly
-- [ ] develop Annual Work Plan visuals and other dashboard components in notebooks 
+- [x] develop Annual Work Plan visuals and other dashboard components in notebooks 
 - [ ] Lay out dashboard design in Dash and convert notebook plots with widgets.
-- [ ] Deploy to Heroku
+- [x] Deploy to Heroku
+- [ ] handle data reads (note it's reading from the data folder just fine)
 
 ## TODO
 
-- [ ] create virtual environment
+- [x] create virtual environment
 
 ## Future Directions
 
@@ -147,7 +153,7 @@ pip install requests  # this is not included in the docs, not sure why it isn't 
 pip install dash-bootstrap-components  # if using Bootstrap
 ```
 
-I use pip for installing packages rather than conda because Heroku uses pip and I find it leads to fewer errors.
+I use pip for installing packages rather than conda because Heroku uses pip and I find it leads to fewer errors. You'll probably need `pandas` and `numpy` among other libraries, but add as you need.
 
 ### Structure
 
@@ -299,7 +305,7 @@ Note I also imported layout_main from `layouts`.
 
 ### Handling data
 
-David Comfort was able to keep data directly in his data directory when deploying to Heroku. I'll give that a shot also.
+Data are just stored and read from the 'processed' data folder, so you need to run the read_*.py files before deploying if updating data (for now). Try a data class that reads everything in, joins it, and stores it in a temp div for later access. There are also constants in the code (e.g., Focal Area names) that are just stored as code, which could be improved.
 
 ### Deploying to Heroku
 
@@ -347,8 +353,9 @@ I deployed as soon as the structure was built to make it easier to debug the dep
   heroku ps:scale web=1
   ```
 
-
+* Be sure to update the requirements file as you go if you add new libraries.
 
 ### Ideas
 
 * Define a Header() function that returns front matter for each layout so you don't have to repeat it. Include logos, etc.
+* Use cards to contain charts for some additional styling.

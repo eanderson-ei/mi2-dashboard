@@ -91,17 +91,20 @@ layout1 = html.Div([
         dbc.Row(
             [
                 dbc.Col(html.Div(), width=1),
-                dbc.Col(html.Div(
+                dbc.Col(dbc.Card(
                     [
-                    html.H1('Annual Work Plan'),
-                    dcc.Graph(id='complete-fa',
-                              figure=functions.update_chart(
-                                  comparison_clean, 
-                                  'Focal Area', 
-                                  focal_areas
-                                  )
-                              )
-                    ])
+                    dbc.CardHeader('Annual Work Plan'),
+                    dbc.CardBody(
+                        dcc.Graph(id='complete-fa',
+                                figure=functions.update_chart(
+                                    comparison_clean, 
+                                    'Focal Area', 
+                                    focal_areas
+                                    )
+                                )
+                        )
+                    ]
+                    )
                 ),
                 dbc.Col(html.Div(), width=1)
             ]
