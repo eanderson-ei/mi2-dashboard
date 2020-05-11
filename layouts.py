@@ -4,12 +4,6 @@ import dash_bootstrap_components as dbc
 from components import functions
 import pandas as pd
 
-focal_areas = ['1. DIRECT FIELD SUPPORT', '2. CROSS MISSION LEARNING GROUPS', '3. EVIDENCE-BASED PRACTICE',
-              '4. BUSINESS PROCESSES AND INTEGRATION', '5. CAPACITY DEVELOPMENT AND ADULT LEARNING', 
-              '6. KNOWLEDGE MANAGEMENT, LEARNING, AND EVALUATION', '7. PROJECT MANAGEMENT']
-comparison = pd.read_csv('data/processed/comparison.csv', index_col=0)
-filt = (comparison['complete']>0) | (comparison['Approved']>0) | (comparison['Billed']>0)
-comparison_clean = comparison.loc[filt, :].copy()
 
 # Nav Bar
 LOGO = "assets/ei-logo-white.png"
@@ -49,7 +43,7 @@ navbar = dbc.Navbar(
     ),
     color="dark",
     dark=True,
-    className="mb-5",
+    className="mb-5"
 )
 
 # landing page jumbotron
@@ -78,6 +72,7 @@ layout_main = html.Div([
 ])
 
 # Annual Work Plan Layout
+# TODO: styles for printing clickData, remove on final deploy
 styles = {
     'pre': {
         'border': 'thin lightgrey solid',
@@ -85,35 +80,199 @@ styles = {
     }
 }
 
+# Card that holds the budget vs. actual chart and reset button
+vs_chart_card = dbc.Card(
+    dcc.Loading(
+        dbc.CardBody(
+            [
+                dbc.Button("Reset", id='clear-clickData',
+                            color='secondary', 
+                            outline=True, size='sm'),
+                dcc.Graph(id='complete-fa',
+                            config={'displayModeBar': False}
+                            )
+            ]
+        )
+    )
+)
+
+# Switches for funding source pie chart
+inline_switches = dbc.Row(
+    [
+        dbc.Col(dbc.Row(
+            [
+                dbc.Label('Approved',
+                        style={'font-family': 'Gill Sans MT, Arial',
+                        'color': '#5f5f5f',
+                        'margin-right': '.5em',
+                        'margin-left': '.5em'}),
+                dbc.Checklist(
+                    options=[
+                        {"label": "Billed", "value": 'Billed'},
+                    ],
+                    value=[],
+                    id="approved-v-billed",
+                    switch=True,
+                    style={'font-family': 'Gill Sans MT, Arial',
+                        'color': '#5f5f5f'}
+                )
+            ]),
+        width=6),
+        
+        dbc.Col(dbc.Row(
+            [
+                dbc.Label('Org',
+                        style={'font-family': 'Gill Sans MT, Arial',
+                        'color': '#5f5f5f',
+                        'margin-right': '.5em',
+                        'margin-left': '2em'}),
+                dbc.Checklist(
+                    options=[
+                        {"label": "Source", "value": 'Funding Source'},
+                    ],
+                    value=[],
+                    id="org-v-source",
+                    switch=True,
+                    style={'font-family': 'Gill Sans MT, Arial',
+                        'color': '#5f5f5f'}
+                )
+            ]),
+        width=6)
+    ]
+)
+
+# Card that illustrates funding source
+card_1 = dbc.Card(
+    [
+    dbc.CardHeader(inline_switches),
+    dcc.Loading(
+        dbc.CardBody([
+            dcc.Graph(id='budget-pie',
+                    config={'displayModeBar': False}
+            )]
+        )
+    )
+    ]
+)
+
+# Card that illustrates proportion within each status
+card_2 = dbc.Card(
+    dcc.Loading(
+        dbc.CardBody(
+            dcc.Graph(id='product-status',
+                      config={'displayModeBar': False})
+            )
+        )
+    )
+
+# Card that holds the choropleth map of status by geography
+card_3 = dbc.Card(dbc.CardBody('C'))
+
+# Card deck that contains the above three cards
+card_deck = dbc.CardDeck(
+    [
+        card_1,
+        card_2
+    ]
+)
+
+# Instructions text
+instructions = html.Div([
+    html.P(
+        'Click through the horizontal bar chart to "drill down" into '
+        'each category. Categories include Project, Funding Source, '
+        'FAB or Buy-In, and Workstream. All charts automatically update '
+        'to match the selected category. "Reset" the chart to go back to '
+        'Project level.'
+    , style={
+        'font-family': 'Gill Sans MT, Arial',
+        'color': '#5f5f5f'
+        }
+    ),
+    html.P(
+        'Green bars indicate that progress is greater than expenditure. '
+        'Yellow bars indicate  that progress is behind expenditure but within '
+        '25 percent of expenditure. Red bars indicate over-spending or progress '
+        'greater than 25 percent behind expenditure.'
+        , style={
+            'font-family': 'Gill Sans MT, Arial',
+            'color': '#5f5f5f'
+            }
+    )
+])
+
+# Instructions toast
+instructions_toast = html.Div(
+    [
+        dbc.Button(
+            "Instructions",
+            id='instructions-toggle',
+            color='primary',
+            size='sm'
+        ),
+        dbc.Toast(
+            html.P(instructions),
+            id='instructions',
+            header='Instructions',
+            dismissable=True,
+            is_open=False,
+            # top: 66 positions the toast below the navbar
+            style={"position": "fixed", "top": 66, "right": 10, "width": 850}
+        )
+    ]
+)
+
+# Instructions toast
+instructions_pop = html.Div(
+    [
+        dbc.Button(
+            "Instructions",
+            id='instructions-toggle',
+            color='primary',
+            size='sm'
+        ),
+        dbc.Popover(
+            [
+                dbc.PopoverHeader('Instructions'),
+                dbc.PopoverBody(instructions)
+            ],
+            id='instructions',
+            is_open=False,
+            # top: 66 positions the toast below the navbar
+            target='instructions-toggle',
+            placement='left'
+        )
+    ]
+)
+
+
+# LAYOUT 1
 layout1 = html.Div([
     navbar,
     dbc.Container(
         dbc.Row(
             [
-                dbc.Col(html.Div(), width=1),
-                dbc.Col(dbc.Card(
+                dbc.Col(
                     [
-                    dbc.CardHeader('Annual Work Plan'),
-                    dbc.CardBody(
-                        dcc.Graph(id='complete-fa',
-                                figure=functions.update_chart(
-                                    comparison_clean, 
-                                    'Focal Area', 
-                                    focal_areas
-                                    )
-                                )
-                        )
-                    ]
-                    )
-                ),
-                dbc.Col(html.Div(), width=1)
+                        dbc.Row([
+                            dbc.Col(html.H5('Annual Work Plan Dashboard', 
+                                            style={'font-family': 'Gill Sans MT, Arial',
+                                                   'color': '#5f5f5f'}), 
+                                    width=10),
+                            dbc.Col(instructions_pop, width=2)]),
+                        html.Br(),
+                        vs_chart_card,
+                        html.Br(),
+                        card_deck
+                    ])
             ]
         )
     )
 ])
 
+
+
+
+
 # Life of Project Layout
-layout2 = html.Div([
-    navbar,
-    jumbotron
-])
+layout2 = layout_main

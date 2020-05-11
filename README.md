@@ -4,6 +4,8 @@ This library supports the MI2 Completion vs. Expended dashboard. Currently the l
 
 To run, use `python index.py`. Also available at [mi2-dashboard.herokuapp.com](https://mi2-dashboard.herokuapp.com/).
 
+DO NOT OVERWRITE XTRACKER.CSV!!!!!!!!!!!!!!!!!!!!! UPDATE LINE FOR LINE.
+
 ## Contents
 
 **app.py**: barebones Dash app with authentication
@@ -38,16 +40,16 @@ To run, use `python index.py`. Also available at [mi2-dashboard.herokuapp.com](h
 
 * **processed**/
 
-  * includes all normalized datasets from the BVA and MI2-wide tracker. Committed to GitHub so that raw versions can be used as input for web-based dashboard as interim solution (may not need to though). Eventually, up-to-date data will need to be piped in from ERP and MI2-wide tracker or MI2 Database.
+  * includes all normalized datasets from the BVA and MI2-wide tracker. Committed to GitHub so that raw versions can be used as input for web-based dashboard as interim solution (may not need to though--heroku can access local data files). Eventually, up-to-date data will need to be piped in from ERP and MI2-wide tracker or MI2 Database.
 
 * **raw/**
 
-  *To avoid interacting with google sheets for now, data are copy/pasted as values into csv's. No other modification is done before reading in.*
+  *To avoid interacting with google sheets for now, data are copy/pasted as values into csv's. No other modification is done before reading in.* MODS REQUIRED IN CAPS, WORK WITH MARIA TO CORRECT.
 
   * **buy-in-tracker.csv**: all data from the *Buy In Task Level* tab of the MI2 wide tracker, pasted as values into a csv.
   * **cross-mission-tracker.csv**: all data from the *Cross-Mission Learning Groups* tab of the MI2 wide tracker, pasted as values into a csv.
-  * **field-support-tracker.csv**: all data from the *Field Support* tab of the MI2-wide tracker, pasted as values into a csv.
-  * **workstream-tracker.csv**: all data from the *FAB Workstream Level* tracker tab of the MI2 wide tracker, pasted as values into a csv.
+  * **field-support-tracker.csv**: all data from the *Field Support* tab of the MI2-wide tracker, pasted as values into a csv. CORRECT LAST THREE ENTRIES THAT ARE INCONSISTENTLY MERGED.
+  * **workstream-tracker.csv**: all data from the *FAB Workstream Level* tracker tab of the MI2 wide tracker, pasted as values into a csv. ADD 6.0.0 TO PROJECT NUMBER 6.0. DELETE \n ABOVE 5.3.3.
 
 **docs/**
 
@@ -56,7 +58,7 @@ To run, use `python index.py`. Also available at [mi2-dashboard.herokuapp.com](h
 **notebooks/**
 
 * exploratory notebooks for data processing. All `read-*` notebooks are replicated as scripts in `scripts/`.
-* exploratory notebooks for charts with plotly.
+* exploratory notebooks for charts with Plotly. Use Jupyter Notebook (not Lab) to view Plotly charts in browser.
 
 **scripts/**
 
@@ -73,6 +75,7 @@ To run, use `python index.py`. Also available at [mi2-dashboard.herokuapp.com](h
 **data/raw/**
 
 * contents of this folder are derived from the MI2-wide tracker and read in by corresponding script in `scripts/` to `data/processed/`.
+* **xtracker.csv**: the cross walk between the ERP, MI2 Wide Tracker, and BVA, available [here](https://docs.google.com/spreadsheets/d/1N4h3qbjXgVawH_ZGa2762aYnvT2NRSiIJFtgwUCuomI/edit?usp=sharing).
 
 **data/external/**
 
@@ -80,13 +83,42 @@ To run, use `python index.py`. Also available at [mi2-dashboard.herokuapp.com](h
 
 ### Flow
 
-1. Process external and raw data and commit to GitHub
-2. Read 'raw' version of the processed data into the Dash app
-3. Populate Dashboard 
+The data processing will be conducted each month by me to speed dashboard load time and allow for QA checks with the MI2 Wide Tracker and BVA are still handled by Maria and Elma. A batch file will allow quick processing and testing once data are pulled down from the web. Each month, the updated data will be pushed to Heroku with any new app features.
+
+1. Read in BVA and mi2-wide tracker data, save to disk (`read-*.py`)
+2. Build comparison from saved csv files and xtracker.csv (`build_comparison.py`)
+   1. For MI2 Tracker
+      1. Identify and rename join column name in each mi2 tracker input
+      2. Concatenate (union) all mi2 tracker inputs
+      3. Convert % complete (a range rep as a string) to a numeric mid-point value
+      4. Join to xtracker and calculate average completeness per BVA Product, select only positive values, and save as `bva-completeness`
+      5. Group by Production Status (as count) and save as `product_status.csv`
+   2. For BVA staff
+      1. Group bva-staff-approved and -revenue by [Organization, Project] and sum approved, billed, respectively; merge
+   3. For TDY
+      1. Group bva-tdy-approved and -revenue by Project and sum approved, billed, respectively, merge
+      2. Add TDY to bva staff output for each focal area, sort, save as `budget`
+   4. To Join
+      1. Join `bva completeness` to `budget`
+   5. Returns df with [Focal Area/Buy In/TDY, Project, Organization, Completeness, Approved, Billed] as `comparison.csv`
+3. Read `comparison.csv` into Dash app
+4. Populate Dashboard 
+   1. VS. Chart: uses `comparison.csv` to show % expended to % complete for Overall Project, by Funding Source (FAB vs. Buy In), by Focal Area or Buy In, and by Product using 'drill down' functionality (use dcc.Store as state variable to inform click?). Consider including filter for Organization to limit view to org level.
+   2. Funding Pie Chart: uses `comparison.csv` to show funding by organization at corresponding level of the VS Chart (project, funding source, focal area/buy in). {Project: Overall, Funding Source: Overall, Focal Area/Buy In: corresponds to Focal_Area or Buy In, Product: corresponds to specific focal_area or buy in}
+   3. Project Status: Uses `product_status.csv` to create bar chart showing proportion of products at each phase (scoping, production, etc). Filter by chart level. {}
+   4. Status Map: For buy-ins and field TA, highlight countries where we work. Future: show progress status by country.
 
 ### Outputs
 
 - A web-based interactive dashboard to aggregate and compare data at the annual work plan level
+
+### Tests
+
+* which mi2 tracker entries in xtracker are dupes?
+* Each flat_file_products[xbva] has one  corresponding entry in the xtracker, same with budget
+* Each budget['MI2']
+* Confirm no N/A values in join fields from MI2 Wide Tracker
+* Make sure there are no missing joins between the bva, xtracker, and mi2 wide tracker
 
 ## Tips & Notes
 
@@ -116,27 +148,78 @@ The key to bva is workstream products: Workstream or Product #, cross mission le
 
 ---
 
+Use Cards (although any dbc component would work, even containers) to separate the content of the app layout from the layout declaration itself. This will make the code much easier to read, as you won't have as many nested statements. For example:
 
+```python
+card1 = dbc.Card(
+    [
+        dbc.CardHeader('Card Header'),
+        dbc.CardBody(
+        [
+            html.H4('Card title', className='card-title'),
+            dcc.Graph(id='graph'),
+            dbc.CardLink(id='link-to-top', 'Go back', color='primary')
+        ])
+    ])
+
+card2 = ...
+
+cards = dbc.Row(
+[dbc.Col(card1, width=4), dbc.Col(card2, width=8)]
+)  # see also utility classes for responsive widths
+
+layout1 = html.Div(
+    [
+        navbar,
+        dbc.Container(cards)
+    ]
+)
+```
+
+This will allow pretty efficient moving around of components in the layout. The **Card Deck** component lays cards out in equal width and height (use for BAN boxes or similar content). **Card Columns** does the same but with unclear organization.
+
+---
+
+Heroku uses an ephemeral file system. This means that at least every 24 hours (or with a new deploy), all files are deleted and saved anew in a sometimes unpredictable location. So, I can't create a csv in an app, save it to data/processed, and expect it to be there when I log in again. This is why SQLite does not work in Heroku. SQLite stores data as files (much like a bunch of csvs), which will get swept away periodically. Alternatively, you can provision a PostgreSQL database that will be saved in AWS and maintained there. This is all done through Heroku, but the free tier limits to 10,000 rows. However, you can deploy with csvs in the data/processed folder and those (and their relative locations) will be known and available for the app. Of course, you can also serve through Raw Github or in Google Sheets.
+
+---
+
+A note on virtual environments. When [setting up a new conda environment](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#using-pip-in-an-environment), include the python argument or [it will not show up in the environment list](https://code.visualstudio.com/docs/python/environments#_conda-environments).
+
+`conda create -n <ENV_NAME> python`
+
+If you forget this step, install python using
+
+`conda install -n <ENV_NAME> python`. Restart VS code and it will now be available.
+
+Note that `-n` and `--name` [are equivalent](https://docs.conda.io/projects/conda/en/latest/commands/create.html#Named%20Arguments).
 
 ## Next Steps
 
-- [x] develop database schema
-- [x] create ERD and send to Elma w/ narrative
-- [x] explore visuals as specified in the PD with plotly (using csv's)
-- [ ] send Elma/Shelly a flat file with Annual work plan data needs
-- [ ] schedule call with Elma/Shelly
-- [x] develop Annual Work Plan visuals and other dashboard components in notebooks 
-- [ ] Lay out dashboard design in Dash and convert notebook plots with widgets.
-- [x] Deploy to Heroku
-- [ ] handle data reads (note it's reading from the data folder just fine)
+- [ ] create a BAT file to read in new data before deploying
+
+- [ ] add google analytics
+
+  `heroku config:add GOOGLE_ANALYTICS_SITE_ID=UA-999999-99`
 
 ## TODO
 
-- [x] create virtual environment
+- [x] left join xtracker [['Focal Area', 'MI2 BVA']] to products to rename Focal Area. Drop original focal area column and rename duplicate.
+- [x] create dictionary for renaming focal areas from BVA to short name, include number for ordering.
+- [ ] add info badge with popup instructions in top right of dashboard
+- [ ] add labels where expense is greater than 100
+- [ ] add today line
+- [ ] Add Last Updated text (Valid through: March 31, 2020)
+- [x] source of funds pie chart
+- [ ] finish callbacks for proportion of projects by product status bar chart (where PreventUpdate now )
+- [ ] status by country chart
+- [ ] confirm MI2 FAB Training does not have any expenses. It does have completeness. Use QA to check for completeness where there is no invoice.
 
 ## Future Directions
 
 - [ ] Specify the report needed from the ERP to replace the BVA and connect the ERP to the Dashboard to auto update.
+- [ ] Progress over time (and projections): bva includes billed for products and tdy per period, which could be used to show billing intensity over time and even projections from historic trends
+- [ ] TDY Forecasts: meet Kelsey's needs to have TDY forecasts
 
 # Notes for EI-Dev
 
@@ -145,15 +228,21 @@ The key to bva is workstream products: Workstream or Product #, cross mission le
 How to start a Dash project
 
 ```bash
-conda create --new <project name>
-conda activate <project name>
+conda create -n <ENV_NAME> python
+conda activate <ENV_NAME>
+conda install pandas
+conda install xlrd
 pip install dash==1.11.0  # use most recent version from Users Guide
 pip install dash-auth==1.3.2  # for basic login protection
 pip install requests  # this is not included in the docs, not sure why it isn't installed as a dependency, but it cleared things up
 pip install dash-bootstrap-components  # if using Bootstrap
 ```
 
-I use pip for installing packages rather than conda because Heroku uses pip and I find it leads to fewer errors. You'll probably need `pandas` and `numpy` among other libraries, but add as you need.
+I use pip for installing packages rather than conda because Heroku uses pip and I find it leads to fewer errors when deploying. You'll probably need `pandas` and `numpy` among other libraries, but add as you need.
+
+Note that conda [recommends](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#using-pip-in-an-environment) installing all packages with conda first (that are available through conda channels) and then switching to pip--and not switching back to conda. Once you go pip, don't go back.
+
+VS Code may ask you to install pylint as a linter, I don't see any issue with doing this, but do it immediately so that you don't switch between pip and conda when VS Code does this for you.
 
 ### Structure
 
@@ -354,6 +443,16 @@ I deployed as soon as the structure was built to make it easier to debug the dep
   ```
 
 * Be sure to update the requirements file as you go if you add new libraries.
+
+### Tracking with Google Analytics
+
+To track with google analytics, set up a new web property on Google Analytics, get the code (e.g., `UA-999999-99) and simply use the command:
+
+```bash
+heroku config:add GOOGLE_ANALYTICS_SITE_ID=UA-999999-99
+```
+
+Push to heroku again.
 
 ### Ideas
 

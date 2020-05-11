@@ -16,7 +16,7 @@ import os
 
 # Planning year is used to indicate which year budgets are approved
 PLANNING_YEAR = 2020
-WORKBOOK_NAME = '1.2020 - MI2 BVA.xlsx'
+WORKBOOK_NAME = '3.2020 - MI2 BVA.xlsx'
 
 # Read in bva from latest Excel sheet
 file_name = os.path.join('data', 'external', WORKBOOK_NAME)
@@ -33,11 +33,12 @@ original_cols = bva_loe_raw.iloc[0,:].copy()
 column_a = bva_loe_raw.iloc[:,0].tolist()
 
 # Update column names for succinctness
-original_cols[0:7] = ['Staff', 
+original_cols[0:8] = ['Staff', 
                       'Functional_Labor', 
                       'GSA_Labor', 
                       'Approved', 
                       'Remaining',
+                      'Percent Remaining',
                       'This Period', 
                       'Spent to Date']
 
@@ -122,7 +123,7 @@ for col in numeric_cols:
         pd.to_numeric, errors='raise')
 
 # Split staff approved and add year
-bva_staff_approved = bva_staff.drop(bva_staff.columns[6:], axis=1, inplace=False)
+bva_staff_approved = bva_staff.drop(bva_staff.columns[7:], axis=1, inplace=False)
 filt = bva_staff_approved.loc[:, 'Approved']>0
 bva_staff_approved = bva_staff_approved[filt].copy()
 bva_staff_approved.reset_index(inplace=True, drop=True)
@@ -134,7 +135,8 @@ bva_staff_approved.to_csv('data/processed/bva-staff-approved-loe.csv')
 # Split staff revenues
 bva_staff_loe_long = bva_staff.drop(['Functional_Labor', 
                                      'GSA_Labor', 'Approved', 'Remaining', 
-                                     'This Period', 'Spent to Date'], 
+                                     'This Period', 'Spent to Date',
+                                     'Percent Remaining'], 
                                      axis=1, inplace=False)
 
 bva_staff_loe = pd.melt(bva_staff_loe_long, 

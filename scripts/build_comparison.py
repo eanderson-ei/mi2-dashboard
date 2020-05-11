@@ -29,7 +29,7 @@ tdy_revenue = pd.read_csv('data/processed/bva-tdy-revenue.csv',
                           index_col=0)
 
 # read in xtracker
-xtracker = pd.read_csv('data/processed/xtracker.csv')
+xtracker = pd.read_csv('data/raw/xtracker.csv')
 
 # update mi2 tracker - workstream products
 workstream_products['Source'] = 'workstream_products'
@@ -42,6 +42,7 @@ workstream_products.rename({'Product #': 'MI2_Tracker_ID'},
 cross_mission_products['Focal Area'] = '2. CROSS MISSION LEARNING GROUPS'
 cross_mission_products['Source'] = 'cross_mission_products'
 cross_mission_products['unique_id'] = 'Product #'
+cross_mission_products.rename({'Workstream ': 'Workstream'}, axis=1, inplace=True)
 cross_mission_products['xbva'] = cross_mission_products['Workstream']
 
 # update mi2 tracker - field support units
@@ -69,6 +70,7 @@ buy_ins.rename({'Buy-In': 'Focal Area',
                 'Product Name': 'MI2_Tracker_ID'}, 
                inplace=True, axis=1)
 
+# union all to flat file
 flat_file_products = pd.concat([workstream_products, 
                                cross_mission_products, 
                                field_support_units, 
@@ -87,27 +89,65 @@ complete_dict = {
 
 flat_file_products['complete'] = flat_file_products['% Completion'].map(complete_dict)
 
-# item-specific remapping
-product_remap = ['5.3.1.A', '5.3.1.B', '5.3.1.C', '5.3.1.D', '5.3.2.A', '5.3.3.A']
-filt = flat_file_products['MI2_Tracker_ID'].isin(product_remap)
-flat_file_products.loc[filt, 'xbva'] = flat_file_products.loc[filt, 'MI2_Tracker_ID']
+# join xtracker to flat file on 'product' name
+products_x = pd.merge(flat_file_products, xtracker, 
+                      left_on='xbva', right_on='MI2-Wide Tracker', 
+                      how='left')
+
+# join xtracker to flat file on foca area
+products_x = pd.merge(products_x, xtracker[['MI2-Wide Tracker', 'MI2 BVA']], 
+                      left_on='Focal Area', right_on='MI2-Wide Tracker', 
+                      how='left', suffixes=(None, '_x'))
+products_x.drop('Focal Area', axis=1, inplace=True)
+products_x.rename({'MI2 BVA_x': 'Focal Area'}, axis=1, inplace = True)
+
+# Remove Focal Area prefix
+products_x['Focal Area'] = products_x['Focal Area']\
+    .str.replace('Focal Area: ', '')
+
+products_x.to_csv('data/processed/products.csv')
+
+# calculate average completeness by mi2 bva product
+bva_completeness = products_x[['MI2 BVA', 'complete']]\
+    .groupby(['MI2 BVA']).mean()
+bva_completeness.reset_index(inplace=True)
 
 # calculate approved and expended
-approved = bva_approved.groupby('Project').sum()[['Approved']]
-expended = bva_revenue.groupby('Project').sum()[['Billed']]
-budget = pd.merge(approved, expended, left_index=True, right_index=True)
+approved = bva_approved.groupby(
+    ['Focal Area', 'Project', 'Organization']
+    ).sum()[['Approved']]
+
+expended = bva_revenue.groupby(
+    ['Focal Area', 'Project', 'Organization']
+    ).sum()[['Billed']]
+
+budget = pd.merge(approved, expended, left_index=True, right_index=True, how='outer')
 budget.reset_index(inplace=True)
 
-# join xtracker to flat file
-products_x = pd.merge(xtracker, flat_file_products,
-                      left_on='MI2-Wide Tracker', right_on='xbva', 
-                      how='outer')
+# add TDY
+approved_tdy = tdy_approved.groupby(['Focal Area', 'TDY']).sum()[['Approved']]
+expended_tdy = tdy_revenue.groupby(['Focal Area', 'TDY']).sum()[['Billed']]
+tdy_merge = pd.merge(approved_tdy, expended_tdy, left_index=True, right_index=True)
+tdy_merge.reset_index(inplace=True)
+tdy_merge.rename({'TDY': 'Project'}, axis=1, inplace=True)
 
-products_v_budget=pd.merge(products_x, budget, right_on='Project', left_on='MI2 BVA', 
-                           how='outer')
+budget = pd.concat([budget, tdy_merge], axis=0, sort=False)
+budget.sort_values('Focal Area', inplace=True)
 
-comparison = products_v_budget.groupby(['Focal Area', 'MI2 BVA']).mean()
-comparison.reset_index(inplace=True)
-comparison.drop('Production Timeline (No. of Months)', axis=1, inplace=True)
+# compare completeness
+bva_completeness = bva_completeness.loc[bva_completeness['complete']>0, :]
+comparison = pd.merge(budget, bva_completeness, left_on='Project', right_on='MI2 BVA', how='left')
+comparison.drop('MI2 BVA', axis=1, inplace=True)
+comparison.sort_values('Focal Area', inplace=True)
 
+# assign funding source
+filt = comparison['Focal Area'].str.startswith('Focal Area')
+comparison.loc[filt, 'Funding Source'] = 'FAB'
+comparison.loc[~filt, 'Funding Source'] = 'Buy-In'
+
+# Remove Focal Area prefix
+comparison.loc[filt, 'Focal Area'] = comparison.loc[filt, 'Focal Area']\
+    .str.replace('Focal Area: ', '')
+
+# save output
 comparison.to_csv('data/processed/comparison.csv')

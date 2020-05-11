@@ -1,61 +1,111 @@
 ,Focal Area,TDY,Period Start,Billed
-0,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total Travel,2019-10-01,10325.51
-1,Focal Area: Cross-Mission Learning Groups (XMLGs),Total ODC,2019-10-01,147.7
-2,Focal Area: Cross-Mission Learning Groups (XMLGs),Total Travel,2019-10-01,1860.88
-3,Focal Area: Capacity Development and Adult Learning,Total ODC,2019-10-01,115.0
-4,Focal Area: Project-Wide Management,Total ODC,2019-10-01,36991.93
-5,Focal Area: Project-Wide Management,Total Travel,2019-10-01,1863.85
-6,BI-LAC,Total Travel,2019-10-01,2853.5758584109117
-7,BI-LAC Total Revenue,LAC Share of Field Support (27%),2019-10-01,63498.646565999996
-8,BI-MAD,Total Travel,2019-10-01,1952.4
-9,BI-MAD,Buy-in Home Office Support (10%),2019-10-01,2041.43523
-10,BI-COL,Total ODC,2019-10-01,53.35
-11,BI-COL,Total Travel,2019-10-01,242.10748419886207
-12,BI-COL,Buy-in Home Office Support (10%),2019-10-01,3849.4538084198853
-13,BI-SAR,Total ODC,2019-10-01,1873.52
-14,BI-SAR,Total Travel,2019-10-01,764.18
-15,BI-SAR,Buy-in Home Office Support (10%),2019-10-01,3416.23646
-16,BI-PERU,Total Travel,2019-10-01,940.4657499999998
-17,BI-MEX,Total ODC,2019-10-01,2212.12
-18,BI-MEX,Total Travel,2019-10-01,2359.39
-19,BI-MEX,Buy-in Home Office Support (10%),2019-10-01,457.15100000000007
-20,BI-NEPAL,Buy-in Home Office Support (10%),2019-10-01,1398.833
-21,BI-CDP,Buy-in Home Office Support (10%),2019-10-01,19.107
-22,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total ODC,2019-11-01,211.7
-23,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total Travel,2019-11-01,2865.46
-24,Focal Area: Cross-Mission Learning Groups (XMLGs),Total ODC,2019-11-01,2271.61
-25,Focal Area: Cross-Mission Learning Groups (XMLGs),Total Travel,2019-11-01,1314.25
-26,Focal Area: Project-Wide Management,Total ODC,2019-11-01,4284.82
-27,Focal Area: Project-Wide Management,Total Travel,2019-11-01,404.53000000000003
-28,BI-LAC,Total Travel,2019-11-01,729.0764760000001
-29,BI-MAD,Buy-in Home Office Support (10%),2019-11-01,2303.37821
-30,BI-COL,Total Travel,2019-11-01,1242.5
-31,BI-COL,Buy-in Home Office Support (10%),2019-11-01,3927.46415
-32,BI-SAR,Buy-in Home Office Support (10%),2019-11-01,2998.23051
-33,BI-PERU,Total ODC,2019-11-01,8.86
-34,BI-PERU,Total Travel,2019-11-01,2978.370893
-35,BI-PERU,Buy-in Home Office Support (10%),2019-11-01,3615.9305893000005
-36,BI-NEPAL,Buy-in Home Office Support (10%),2019-11-01,581.3481
-37,BI-CDP,Buy-in Home Office Support (10%),2019-11-01,210.63792
-38,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total Travel,2019-12-01,3072.524812
-39,Focal Area: Cross-Mission Learning Groups (XMLGs),Total ODC,2019-12-01,21.3
-40,Focal Area: Cross-Mission Learning Groups (XMLGs),Total Travel,2019-12-01,1646.57
-41,Focal Area: Project-Wide Management,Total ODC,2019-12-01,1646.48
-42,BI-MAD,Total ODC,2019-12-01,2578.67
-43,BI-MAD,Buy-in Home Office Support (10%),2019-12-01,3085.5417199999997
-44,BI-COL,Buy-in Home Office Support (10%),2019-12-01,2879.83374
-45,BI-SAR,Buy-in Home Office Support (10%),2019-12-01,3071.0202
-46,BI-PERU,Buy-in Home Office Support (10%),2019-12-01,1153.2329
-47,BI-MEX,Buy-in Home Office Support (10%),2019-12-01,102.93546000000002
-48,BI-NEPAL,Buy-in Home Office Support (10%),2019-12-01,316.32817000000006
-49,BI-CDP,Buy-in Home Office Support (10%),2019-12-01,477.1466200000001
-50,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total ODC,2020-01-01,295.073284
-51,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total Travel,2020-01-01,8632.02
-52,Focal Area: Cross-Mission Learning Groups (XMLGs),Total ODC,2020-01-01,558.5600000000001
-53,BI-MAD,Buy-in Home Office Support (10%),2020-01-01,3495.35078
-54,BI-COL,Buy-in Home Office Support (10%),2020-01-01,2041.3498
-55,BI-SAR,Buy-in Home Office Support (10%),2020-01-01,3903.789929999999
-56,BI-PERU,Buy-in Home Office Support (10%),2020-01-01,2014.2933700000003
-57,BI-MEX,Buy-in Home Office Support (10%),2020-01-01,79.32547000000001
-58,BI-NEPAL,Buy-in Home Office Support (10%),2020-01-01,143.04450000000003
-59,BI-CDP,Buy-in Home Office Support (10%),2020-01-01,15.132299999999999
+0,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total Travel,Percent Remaining,0.5046352105070251
+1,Focal Area: Cross-Mission Learning Groups (XMLGs),Total Travel,Percent Remaining,0.8979027586206897
+2,Focal Area: Evidence Use and Generation,Total ODC,Percent Remaining,0.3018867924528302
+3,Focal Area: Evidence Use and Generation,Total Travel,Percent Remaining,1.0
+4,Focal Area: Business Processes (WG2) and Integration (WG3),Total ODC,Percent Remaining,1.0
+5,BI-LAC,Total Travel,Percent Remaining,0.8675650346479347
+6,BI-MAD,Total ODC,Percent Remaining,0.7349773895169579
+7,BI-MAD,Total Travel,Percent Remaining,0.8555169096425664
+8,BI-MAD,Buy-in Home Office Support (10%),Percent Remaining,0.6046117417624507
+9,BI-COL,Total ODC,Percent Remaining,0.9965610168518518
+10,BI-COL,Total Travel,Percent Remaining,0.9325150967615822
+11,BI-COL,Buy-in Home Office Support (10%),Percent Remaining,0.3187595743508417
+12,BI-SAR,Total ODC,Percent Remaining,0.8343369992144541
+13,BI-SAR,Total Travel,Percent Remaining,0.9302371176866605
+14,BI-SAR,Buy-in Home Office Support (10%),Percent Remaining,0.6252757194257303
+15,BI-PERU,Total ODC,Percent Remaining,0.994937142857143
+16,BI-PERU,Total Travel,Percent Remaining,0.8113404273541306
+17,BI-PERU,Buy-in Home Office Support (10%),Percent Remaining,0.821622231763029
+18,BI-MEX,Buy-in Home Office Support (10%),Percent Remaining,0.9071265073193023
+19,BI-NEPAL,Total Travel,Percent Remaining,0.2557764505119453
+20,BI-CDP,Total ODC,Percent Remaining,0.29888
+21,BI-CDP,Total Travel,Percent Remaining,1.0
+22,BI-CDP,Buy-in Home Office Support (10%),Percent Remaining,0.9243567497331878
+23,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total Travel,2019-10-01 00:00:00,10325.51
+24,Focal Area: Cross-Mission Learning Groups (XMLGs),Total ODC,2019-10-01 00:00:00,147.7
+25,Focal Area: Cross-Mission Learning Groups (XMLGs),Total Travel,2019-10-01 00:00:00,1860.88
+26,Focal Area: Capacity Development and Adult Learning,Total ODC,2019-10-01 00:00:00,115.0
+27,Focal Area: Project-Wide Management,Total ODC,2019-10-01 00:00:00,36991.93
+28,Focal Area: Project-Wide Management,Total Travel,2019-10-01 00:00:00,1863.85
+29,BI-LAC,Total Travel,2019-10-01 00:00:00,2853.5758584109117
+30,BI-LAC Total Revenue,LAC Share of Field Support (27%),2019-10-01 00:00:00,63498.646565999996
+31,BI-MAD,Total Travel,2019-10-01 00:00:00,1952.4
+32,BI-MAD,Buy-in Home Office Support (10%),2019-10-01 00:00:00,2041.43523
+33,BI-COL,Total ODC,2019-10-01 00:00:00,53.35
+34,BI-COL,Total Travel,2019-10-01 00:00:00,242.10748419886207
+35,BI-COL,Buy-in Home Office Support (10%),2019-10-01 00:00:00,3849.4538084198853
+36,BI-SAR,Total ODC,2019-10-01 00:00:00,1873.52
+37,BI-SAR,Total Travel,2019-10-01 00:00:00,764.18
+38,BI-SAR,Buy-in Home Office Support (10%),2019-10-01 00:00:00,3416.23646
+39,BI-PERU,Total Travel,2019-10-01 00:00:00,940.4657499999998
+40,BI-MEX,Total ODC,2019-10-01 00:00:00,2212.12
+41,BI-MEX,Total Travel,2019-10-01 00:00:00,2359.39
+42,BI-MEX,Buy-in Home Office Support (10%),2019-10-01 00:00:00,457.15100000000007
+43,BI-NEPAL,Buy-in Home Office Support (10%),2019-10-01 00:00:00,1398.833
+44,BI-CDP,Buy-in Home Office Support (10%),2019-10-01 00:00:00,19.107
+45,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total ODC,2019-11-01 00:00:00,211.7
+46,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total Travel,2019-11-01 00:00:00,2865.46
+47,Focal Area: Cross-Mission Learning Groups (XMLGs),Total ODC,2019-11-01 00:00:00,2271.61
+48,Focal Area: Cross-Mission Learning Groups (XMLGs),Total Travel,2019-11-01 00:00:00,1314.25
+49,Focal Area: Project-Wide Management,Total ODC,2019-11-01 00:00:00,4284.82
+50,Focal Area: Project-Wide Management,Total Travel,2019-11-01 00:00:00,404.53000000000003
+51,BI-LAC,Total Travel,2019-11-01 00:00:00,729.0764760000001
+52,BI-MAD,Buy-in Home Office Support (10%),2019-11-01 00:00:00,2303.37821
+53,BI-COL,Total Travel,2019-11-01 00:00:00,1242.5
+54,BI-COL,Buy-in Home Office Support (10%),2019-11-01 00:00:00,3927.46415
+55,BI-SAR,Buy-in Home Office Support (10%),2019-11-01 00:00:00,2998.23051
+56,BI-PERU,Total ODC,2019-11-01 00:00:00,8.86
+57,BI-PERU,Total Travel,2019-11-01 00:00:00,2978.370893
+58,BI-PERU,Buy-in Home Office Support (10%),2019-11-01 00:00:00,3615.9305893000005
+59,BI-NEPAL,Buy-in Home Office Support (10%),2019-11-01 00:00:00,581.3481
+60,BI-CDP,Buy-in Home Office Support (10%),2019-11-01 00:00:00,210.63792
+61,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total Travel,2019-12-01 00:00:00,3072.524812
+62,Focal Area: Cross-Mission Learning Groups (XMLGs),Total ODC,2019-12-01 00:00:00,21.3
+63,Focal Area: Cross-Mission Learning Groups (XMLGs),Total Travel,2019-12-01 00:00:00,1646.57
+64,Focal Area: Project-Wide Management,Total ODC,2019-12-01 00:00:00,1646.48
+65,BI-MAD,Total ODC,2019-12-01 00:00:00,2578.67
+66,BI-MAD,Buy-in Home Office Support (10%),2019-12-01 00:00:00,3085.5417199999997
+67,BI-COL,Buy-in Home Office Support (10%),2019-12-01 00:00:00,2879.83374
+68,BI-SAR,Buy-in Home Office Support (10%),2019-12-01 00:00:00,3071.0202
+69,BI-PERU,Buy-in Home Office Support (10%),2019-12-01 00:00:00,1153.2329
+70,BI-MEX,Buy-in Home Office Support (10%),2019-12-01 00:00:00,102.93546000000002
+71,BI-NEPAL,Buy-in Home Office Support (10%),2019-12-01 00:00:00,316.32817000000006
+72,BI-CDP,Buy-in Home Office Support (10%),2019-12-01 00:00:00,477.1466200000001
+73,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total ODC,2020-01-01 00:00:00,295.073284
+74,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total Travel,2020-01-01 00:00:00,8632.02
+75,Focal Area: Cross-Mission Learning Groups (XMLGs),Total ODC,2020-01-01 00:00:00,558.5600000000001
+76,BI-MAD,Buy-in Home Office Support (10%),2020-01-01 00:00:00,3495.35078
+77,BI-COL,Buy-in Home Office Support (10%),2020-01-01 00:00:00,2041.3498
+78,BI-SAR,Buy-in Home Office Support (10%),2020-01-01 00:00:00,3903.789929999999
+79,BI-PERU,Buy-in Home Office Support (10%),2020-01-01 00:00:00,2014.2933700000003
+80,BI-MEX,Buy-in Home Office Support (10%),2020-01-01 00:00:00,79.32547000000001
+81,BI-NEPAL,Buy-in Home Office Support (10%),2020-01-01 00:00:00,143.04450000000003
+82,BI-CDP,Buy-in Home Office Support (10%),2020-01-01 00:00:00,15.132299999999999
+83,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total Travel,2020-02-01 00:00:00,1385.0999999999995
+84,Focal Area: Evidence Use and Generation,Total ODC,2020-02-01 00:00:00,1480.0
+85,Focal Area: Project-Wide Management,Total ODC,2020-02-01 00:00:00,4305.0
+86,BI-LAC,Total Travel,2020-02-01 00:00:00,566.8
+87,BI-MAD,Buy-in Home Office Support (10%),2020-02-01 00:00:00,3292.7860199999996
+88,BI-COL,Total Travel,2020-02-01 00:00:00,577.24
+89,BI-COL,Buy-in Home Office Support (10%),2020-02-01 00:00:00,4408.97693
+90,BI-SAR,Total ODC,2020-02-01 00:00:00,235.37
+91,BI-SAR,Total Travel,2020-02-01 00:00:00,3588.047176
+92,BI-SAR,Buy-in Home Office Support (10%),2020-02-01 00:00:00,6330.7800576
+93,BI-PERU,Buy-in Home Office Support (10%),2020-02-01 00:00:00,1724.9282400000002
+94,BI-NEPAL,Buy-in Home Office Support (10%),2020-02-01 00:00:00,64.68612
+95,BI-CDP,Buy-in Home Office Support (10%),2020-02-01 00:00:00,163.00943
+96,Focal Area: Cross-Mission Learning Groups (XMLGs),Total ODC,2020-03-01 00:00:00,71.25
+97,Focal Area: Project-Wide Management,Total ODC,2020-03-01 00:00:00,15.0
+98,BI-LAC,Total ODC,2020-03-01 00:00:00,203.62
+99,BI-MAD,Buy-in Home Office Support (10%),2020-03-01 00:00:00,2330.2254000000003
+100,BI-COL,Total ODC,2020-03-01 00:00:00,20.932036
+101,BI-COL,Buy-in Home Office Support (10%),2020-03-01 00:00:00,2317.7268035999996
+102,BI-SAR,Buy-in Home Office Support (10%),2020-03-01 00:00:00,4349.16317
+103,BI-PERU,Buy-in Home Office Support (10%),2020-03-01 00:00:00,2605.65214
+104,BI-NEPAL,Total ODC,2020-03-01 00:00:00,560.78
+105,BI-NEPAL,Total Travel,2020-03-01 00:00:00,7850.070000000001
+106,BI-NEPAL,Buy-in Home Office Support (10%),2020-03-01 00:00:00,7732.56212
+107,BI-CDP,Total ODC,2020-03-01 00:00:00,175.28
+108,BI-CDP,Buy-in Home Office Support (10%),2020-03-01 00:00:00,222.34700000000004
+109,BI-CARPE,Buy-in Home Office Support (10%),2020-03-01 00:00:00,365.4947

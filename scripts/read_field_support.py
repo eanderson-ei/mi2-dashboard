@@ -9,8 +9,8 @@ CSV_PATH = os.path.join('data', 'raw', 'field-support-tracker.csv')
 field_raw = pd.read_csv('data/raw/field-support-tracker.csv',
                         header=None, skiprows=0)
 
-#eliminate white space and move worskstream 1.1 to column a
-field_raw.iloc[3,0] = field_raw.iloc[3,1].strip()
+# eliminate white space and move worskstream 1.1 to column a
+field_raw.iloc[3,0] = field_raw.iloc[3,0].strip()
 
 # Merge multi-level column names to one list
 columns = []
