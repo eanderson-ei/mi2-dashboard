@@ -51,8 +51,8 @@ product_order = {
 def update_chart(comparison_clean, mode, selector_list=None):
         
     color_scale = [(0.00, colors['red']),   (0.25, colors['red']),
-                   (0.25, colors['yellow']), (0.5, colors['yellow']),
-                   (0.5, colors['green']),  (1.00, colors['green'])]
+                   (0.25, colors['yellow']), (0.475, colors['yellow']),
+                   (0.475, colors['green']),  (1.00, colors['green'])]
     
     bar_width = .7          
 
@@ -74,6 +74,7 @@ def update_chart(comparison_clean, mode, selector_list=None):
 
 
     def create_fig(rows=1, cols=1):
+        """SUBPLOTS A REMNANT AND NO LONGER USED"""
         # if rows == 2:
         #     row_heights = [7/15, 8/15]  # Adjust for difference in fa vs buy ins
         # else: 
@@ -362,6 +363,32 @@ def product_status_chart(products_clean, selector_col=None,
     
     return fig
 
+
+def generate_product_table(products_clean, selector_col=None,
+                           selector_list=None):
+    if selector_col:
+        filt = products_clean[selector_col].isin(selector_list)
+        df = products_clean.loc[filt, :]
+    else:
+        df = products_clean
+    
+    # Filter to important columns    
+    columns = ['MI2_Tracker_ID', 'Product Name', 'MI Lead', 'FAB Lead', 
+             'Product Status', 'Production Timeline (No. of Months)', 
+             '% Completion', 'Due Date', 'Output #', 'Status', 'LAC Lead']
+    
+    filt = df.columns.isin(columns)
+    df = df.loc[:, filt].copy()
+    
+    # Drop column if no data
+    df.dropna(axis=1, how='all', inplace=True)
+    
+    # Drop row if no data
+    df.dropna(axis=0, how='all', inplace=True)
+    
+    print(df)
+    
+    return df
 
 if __name__ == '__main__':
     comparison =  pd.read_csv('data/processed/comparison.csv', index_col=0)

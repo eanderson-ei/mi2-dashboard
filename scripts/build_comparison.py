@@ -42,7 +42,8 @@ workstream_products.rename({'Product #': 'MI2_Tracker_ID'},
 cross_mission_products['Focal Area'] = '2. CROSS MISSION LEARNING GROUPS'
 cross_mission_products['Source'] = 'cross_mission_products'
 cross_mission_products['unique_id'] = 'Product #'
-cross_mission_products.rename({'Workstream ': 'Workstream'}, axis=1, inplace=True)
+cross_mission_products.rename({'Workstream ': 'Workstream',
+                               'Status': 'Product Status'}, axis=1, inplace=True)
 cross_mission_products['xbva'] = cross_mission_products['Workstream']
 
 # update mi2 tracker - field support units

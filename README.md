@@ -206,14 +206,15 @@ Note that `-n` and `--name` [are equivalent](https://docs.conda.io/projects/cond
 
 - [x] left join xtracker [['Focal Area', 'MI2 BVA']] to products to rename Focal Area. Drop original focal area column and rename duplicate.
 - [x] create dictionary for renaming focal areas from BVA to short name, include number for ordering.
-- [ ] add info badge with popup instructions in top right of dashboard
+- [x] add info badge with popup instructions in top right of dashboard
 - [ ] add labels where expense is greater than 100
 - [ ] add today line
 - [ ] Add Last Updated text (Valid through: March 31, 2020)
 - [x] source of funds pie chart
-- [ ] finish callbacks for proportion of projects by product status bar chart (where PreventUpdate now )
+- [x] finish callbacks for proportion of projects by product status bar chart (where PreventUpdate now )
 - [ ] status by country chart
 - [ ] confirm MI2 FAB Training does not have any expenses. It does have completeness. Use QA to check for completeness where there is no invoice.
+- [ ] review CARPE Buy In where it has completion status and it is not 
 
 ## Future Directions
 

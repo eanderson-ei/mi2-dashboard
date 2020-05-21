@@ -4,9 +4,10 @@ import dash_bootstrap_components as dbc
 from components import functions
 import pandas as pd
 
+from app import app 
 
 # Nav Bar
-LOGO = "assets/ei-logo-white.png"
+LOGO = app.get_asset_url('ei-logo-white.png')
 
 # nav item links
 nav_items = dbc.Container([
@@ -72,13 +73,6 @@ layout_main = html.Div([
 ])
 
 # Annual Work Plan Layout
-# TODO: styles for printing clickData, remove on final deploy
-styles = {
-    'pre': {
-        'border': 'thin lightgrey solid',
-        'overflowX': 'scroll'
-    }
-}
 
 # Card that holds the budget vs. actual chart and reset button
 vs_chart_card = dbc.Card(
@@ -90,7 +84,10 @@ vs_chart_card = dbc.Card(
                             outline=True, size='sm'),
                 dcc.Graph(id='complete-fa',
                             config={'displayModeBar': False}
-                            )
+                            ),
+                html.Img(src=app.get_asset_url('progress-legend.png'), 
+                         height="40px",
+                         className='mx-auto d-block')
             ]
         )
     )
@@ -188,16 +185,6 @@ instructions = html.Div([
         'font-family': 'Gill Sans MT, Arial',
         'color': '#5f5f5f'
         }
-    ),
-    html.P(
-        'Green bars indicate that progress is greater than expenditure. '
-        'Yellow bars indicate  that progress is behind expenditure but within '
-        '25 percent of expenditure. Red bars indicate over-spending or progress '
-        'greater than 25 percent behind expenditure.'
-        , style={
-            'font-family': 'Gill Sans MT, Arial',
-            'color': '#5f5f5f'
-            }
     )
 ])
 
@@ -240,7 +227,7 @@ instructions_pop = html.Div(
             is_open=False,
             # top: 66 positions the toast below the navbar
             target='instructions-toggle',
-            placement='left'
+            placement='bottom'
         )
     ]
 )
@@ -255,7 +242,7 @@ layout1 = html.Div([
                 dbc.Col(
                     [
                         dbc.Row([
-                            dbc.Col(html.H5('Annual Work Plan Dashboard', 
+                            dbc.Col(html.H5('FY20 Annual Work Plan Dashboard', 
                                             style={'font-family': 'Gill Sans MT, Arial',
                                                    'color': '#5f5f5f'}), 
                                     width=10),
@@ -263,7 +250,9 @@ layout1 = html.Div([
                         html.Br(),
                         vs_chart_card,
                         html.Br(),
-                        card_deck
+                        card_deck,
+                        html.Br(),
+                        dbc.Container(id='product-table')
                     ])
             ]
         )

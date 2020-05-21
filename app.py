@@ -6,7 +6,7 @@ import os
 
 external_stylesheets = [dbc.themes.FLATLY]  # Also try LITERA, SPACELAB
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets, show_undo_redo=True)
 server = app.server
 app.config.suppress_callback_exceptions = True
 

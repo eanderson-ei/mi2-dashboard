@@ -1,6 +1,7 @@
 from dash.dependencies import Input, Output, State
 from components import functions
 from dash.exceptions import PreventUpdate
+import dash_bootstrap_components as dbc
 
 from app import app
 
@@ -12,8 +13,8 @@ filt = (comparison['complete']>0) | (comparison['Approved']>0) | (comparison['Bi
 comparison_clean = comparison.loc[filt, :].copy()
 
 products = pd.read_csv('data/processed/products.csv', index_col=0)
-filt = products['Product Status'].isnull()
-products_clean = products.loc[~filt, :].copy()
+# filt = products['Product Status'].isnull()
+products_clean = products
 
 focal_areas = {
     'Direct Field Support - Mission Support Through TA & Buy-Ins': '1A. DFS - Mission Support',
@@ -240,6 +241,48 @@ def toggle_popover(n, is_open):
     if n:
         return not is_open
     return is_open
+
+
+@app.callback(
+    Output('product-table', 'children'),
+    [Input('complete-fa', 'clickData')]
+)
+def add_product_table(clickData):
+    if clickData is None:
+        return None
+    else:
+        click = clickData['points'][0]['y']
+        if click == 'Project':
+            raise PreventUpdate
+            # table = functions.generate_product_table(
+            #     products_clean
+            # )
+        elif click in ['FAB', 'Buy-In']:
+            raise PreventUpdate
+            # table = functions.generate_product_table(
+            #     products_clean,
+            #     'Funding Source',
+            #     [click]
+            # )
+        elif click in list(focal_areas.values()) + buy_ins:
+            table = functions.generate_product_table(
+                products_clean,
+                'Focal Area',
+                [click]
+            )
+        else:
+            table = functions.generate_product_table(
+            products_clean
+            )
+        
+    product_table = dbc.Table.from_dataframe(table,
+                                             striped=True,
+                                             bordered=False,
+                                             hover=True,
+                                             responsive=True)
+    
+    return product_table
+
 
 # # Open Instructions
 # @app.callback(
