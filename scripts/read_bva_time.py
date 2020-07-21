@@ -16,7 +16,7 @@ import os
 
 # Planning year is used to indicate which year budgets are approved
 PLANNING_YEAR = 2020
-WORKBOOK_NAME = '3.2020 - MI2 BVA.xlsx'
+WORKBOOK_NAME = '5.2020 - MI2 BVA.xlsx'
 
 # Read in bva from latest Excel sheet
 file_name = os.path.join('data', 'external', WORKBOOK_NAME)

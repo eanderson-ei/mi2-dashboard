@@ -4,7 +4,55 @@ This library supports the MI2 Completion vs. Expended dashboard. Currently the l
 
 To run, use `python index.py`. Also available at [mi2-dashboard.herokuapp.com](https://mi2-dashboard.herokuapp.com/).
 
+## Update Procedure
+
 DO NOT OVERWRITE XTRACKER.CSV!!!!!!!!!!!!!!!!!!!!! UPDATE LINE FOR LINE.
+
+1. Initiate mi2-dashboard environment `conda activate mi2-dashboard`
+
+2. Pull changes from github (`git pull`)
+
+3. To preserve previous working versions of data, save the `data/processed` and `data/raw` folders as zip files.
+
+4. Download most recent BVA (see `related-products.md` in `data/external` for link) and save a copy to `data/external`
+
+5. Update `scripts/read_bva_revenue.py` and `scripts/read_bva_time.py` to point to new BVA (line 22 and 19, respectively)
+
+6. Run (from root) the above two scripts. Note that data in `data/processed` will be overwritten. (Each new BVA includes data from all previous BVAs). Spot check any `data/processed/bva*.csv` files.
+
+7. Navigate to MI2-Tracker and copy all data from each sheet, delete everything and then paste as text into the appropriate `CSV` in `data/raw`; run the corresponding python script and check the output in `data/processed`.
+
+   - FAB Workstream Level : 
+     - `workstream-tracker.csv` 
+     - RUN `scripts/read_tracker_fab.py`; 
+     - check `data/processed/workstream-products.csv`
+   - Field Support by Region: 
+     - `field-support-tracker.csv` 
+     - RUN `scripts/read_field_support.py`; 
+     - check `processed/field-support-units.csv`
+   - Buy-In Task Level: 
+     - `buy-in-tracker.csv` 
+     - RUN `scripts/read_tracker_buy_in.py`; 
+     - check `processed/buy-in*.csv`
+   - Cross Mission Learning Groups:
+     - `cross-mission-tracker.csv`
+     - RUN `scripts/read_tracker_cml.py`
+     - check `processed/cross-mission-products.csv`
+
+8. Run `scripts/build_comparison.py` . A new `data/processed/products.csv` and `data/processed/comparison.csv` will be created.
+
+9. Launch app and check for functionality (`python index.py`)
+
+10. Commit changes, push to github and push to heroku
+
+    ```bash
+    git add -A
+    git commit -m "<MESSAGE>"
+    git push origin master
+    git push heroku master
+    ```
+
+11. Done!
 
 ## Contents
 
@@ -66,7 +114,7 @@ DO NOT OVERWRITE XTRACKER.CSV!!!!!!!!!!!!!!!!!!!!! UPDATE LINE FOR LINE.
 
 **sql/**
 
-* contains sql files for creating the database. The database was developed primarily for data modelling purposes, and is on hold. Data will be read in directly from csvs stored on GitHub (see *Design*).
+* contains sql files for creating the database. The database was developed primarily for data modelling purposes, and is on hold. Data will be read in directly from csv's stored on GitHub (see *Design*).
 
 ## Design
 

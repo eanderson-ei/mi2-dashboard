@@ -3,25 +3,25 @@
 1,Focal Area: Cross-Mission Learning Groups (XMLGs),Total Travel,Percent Remaining,0.8979027586206897
 2,Focal Area: Evidence Use and Generation,Total ODC,Percent Remaining,0.3018867924528302
 3,Focal Area: Evidence Use and Generation,Total Travel,Percent Remaining,1.0
-4,Focal Area: Business Processes (WG2) and Integration (WG3),Total ODC,Percent Remaining,1.0
+4,Focal Area: Business Processes (WG2) and Integration (WG3),Total ODC,Percent Remaining,0.9915833333333334
 5,BI-LAC,Total Travel,Percent Remaining,0.8675650346479347
-6,BI-MAD,Total ODC,Percent Remaining,0.7349773895169579
+6,BI-MAD,Total ODC,Percent Remaining,0.30486433710174715
 7,BI-MAD,Total Travel,Percent Remaining,0.8555169096425664
-8,BI-MAD,Buy-in Home Office Support (10%),Percent Remaining,0.6046117417624507
+8,BI-MAD,Buy-in Home Office Support (10%),Percent Remaining,0.3515174397536294
 9,BI-COL,Total ODC,Percent Remaining,0.9965610168518518
 10,BI-COL,Total Travel,Percent Remaining,0.9325150967615822
-11,BI-COL,Buy-in Home Office Support (10%),Percent Remaining,0.3187595743508417
-12,BI-SAR,Total ODC,Percent Remaining,0.8343369992144541
-13,BI-SAR,Total Travel,Percent Remaining,0.9302371176866605
-14,BI-SAR,Buy-in Home Office Support (10%),Percent Remaining,0.6252757194257303
+11,BI-COL,Buy-in Home Office Support (10%),Percent Remaining,0.20572747568618965
+12,BI-SAR,Total ODC,Percent Remaining,0.7192105263157894
+13,BI-SAR,Total Travel,Percent Remaining,0.8819291639790979
+14,BI-SAR,Buy-in Home Office Support (10%),Percent Remaining,0.4891664092207705
 15,BI-PERU,Total ODC,Percent Remaining,0.994937142857143
 16,BI-PERU,Total Travel,Percent Remaining,0.8113404273541306
-17,BI-PERU,Buy-in Home Office Support (10%),Percent Remaining,0.821622231763029
-18,BI-MEX,Buy-in Home Office Support (10%),Percent Remaining,0.9071265073193023
+17,BI-PERU,Buy-in Home Office Support (10%),Percent Remaining,0.7426169238665162
+18,BI-MEX,Buy-in Home Office Support (10%),Percent Remaining,0.9058738667687374
 19,BI-NEPAL,Total Travel,Percent Remaining,0.2557764505119453
 20,BI-CDP,Total ODC,Percent Remaining,0.29888
 21,BI-CDP,Total Travel,Percent Remaining,1.0
-22,BI-CDP,Buy-in Home Office Support (10%),Percent Remaining,0.9243567497331878
+22,BI-CDP,Buy-in Home Office Support (10%),Percent Remaining,0.7772267600176836
 23,Focal Area: Direct Field Support - Mission Support Through TA & Buy-Ins,Total Travel,2019-10-01 00:00:00,10325.51
 24,Focal Area: Cross-Mission Learning Groups (XMLGs),Total ODC,2019-10-01 00:00:00,147.7
 25,Focal Area: Cross-Mission Learning Groups (XMLGs),Total Travel,2019-10-01 00:00:00,1860.88
@@ -109,3 +109,25 @@
 107,BI-CDP,Total ODC,2020-03-01 00:00:00,175.28
 108,BI-CDP,Buy-in Home Office Support (10%),2020-03-01 00:00:00,222.34700000000004
 109,BI-CARPE,Buy-in Home Office Support (10%),2020-03-01 00:00:00,365.4947
+110,Focal Area: Business Processes (WG2) and Integration (WG3),Total ODC,2020-04-01 00:00:00,505.0
+111,Focal Area: Project-Wide Management,Total ODC,2020-04-01 00:00:00,15.0
+112,BI-MAD,Total ODC,2020-04-01 00:00:00,4185.0
+113,BI-MAD,Buy-in Home Office Support (10%),2020-04-01 00:00:00,4580.12065
+114,BI-COL,Buy-in Home Office Support (10%),2020-04-01 00:00:00,950.17732
+115,BI-SAR,Total Travel,2020-04-01 00:00:00,3013.74
+116,BI-SAR,Buy-in Home Office Support (10%),2020-04-01 00:00:00,4065.13272
+117,BI-PERU,Buy-in Home Office Support (10%),2020-04-01 00:00:00,1607.05357
+118,BI-MEX,Buy-in Home Office Support (10%),2020-04-01 00:00:00,2.5984499999999997
+119,BI-NEPAL,Buy-in Home Office Support (10%),2020-04-01 00:00:00,677.5336
+120,BI-CDP,Buy-in Home Office Support (10%),2020-04-01 00:00:00,290.65956
+121,BI-CARPE,Buy-in Home Office Support (10%),2020-04-01 00:00:00,656.5268500000001
+122,Focal Area: Cross-Mission Learning Groups (XMLGs),Total ODC,2020-05-01 00:00:00,73.75
+123,BI-LAC,Total ODC,2020-05-01 00:00:00,202.75728
+124,BI-MAD,Buy-in Home Office Support (10%),2020-05-01 00:00:00,6012.97609
+125,BI-COL,Buy-in Home Office Support (10%),2020-05-01 00:00:00,2272.80596
+126,BI-SAR,Total ODC,2020-05-01 00:00:00,1465.56
+127,BI-SAR,Buy-in Home Office Support (10%),2020-05-01 00:00:00,4677.41519
+128,BI-PERU,Buy-in Home Office Support (10%),2020-05-01 00:00:00,2597.3652
+129,BI-NEPAL,Buy-in Home Office Support (10%),2020-05-01 00:00:00,514.7988
+130,BI-CDP,Buy-in Home Office Support (10%),2020-05-01 00:00:00,1863.25169
+131,BI-CARPE,Buy-in Home Office Support (10%),2020-05-01 00:00:00,1104.5317000000002

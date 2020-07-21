@@ -242,7 +242,7 @@ layout1 = html.Div([
                 dbc.Col(
                     [
                         dbc.Row([
-                            dbc.Col(html.H5('FY20 Annual Work Plan Dashboard', 
+                            dbc.Col(html.H5('FY20 Annual Work Plan Dashboard (Updated with May 2020 Actuals)', 
                                             style={'font-family': 'Gill Sans MT, Arial',
                                                    'color': '#5f5f5f'}), 
                                     width=10),
