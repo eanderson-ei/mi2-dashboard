@@ -257,7 +257,7 @@ Note that `-n` and `--name` [are equivalent](https://docs.conda.io/projects/cond
 - [x] add info badge with popup instructions in top right of dashboard
 - [ ] add labels where expense is greater than 100
 - [ ] add today line
-- [ ] Add Last Updated text (Valid through: March 31, 2020)
+- [x] Add Last Updated text (Valid through: March 31, 2020)
 - [x] source of funds pie chart
 - [x] finish callbacks for proportion of projects by product status bar chart (where PreventUpdate now )
 - [ ] status by country chart
@@ -495,13 +495,52 @@ I deployed as soon as the structure was built to make it easier to debug the dep
 
 ### Tracking with Google Analytics
 
+To track with Google Analytics, set up a new web property on Google Analytics, get the script, and paste it into the header tag in `index.py`.
+
+```python
+app.index_string = '''
+<!DOCTYPE html>
+<html>
+    <head>
+        {%metas%}
+        <title>Utilization Report</title>
+        {%favicon%}
+        {%css%}
+        
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151885346-2"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-151885346-2');
+        </script>
+
+    </head>
+    <body>
+        <div></div>
+        {%app_entry%}
+        <footer>
+            {%config%}
+            {%scripts%}
+            {%renderer%}
+        </footer>
+        <div></div>
+    </body>
+</html>
+'''
+```
+
+Optionally, you can store the tracking code as an environment variable as below, and use an f-string to sub in the environment variable for the hard-coded value. Because the property id is served as plain text online anyway, I'm not sure it's worth it.
+
 To track with google analytics, set up a new web property on Google Analytics, get the code (e.g., `UA-999999-99) and simply use the command:
 
 ```bash
 heroku config:add GOOGLE_ANALYTICS_SITE_ID=UA-999999-99
 ```
 
-Push to heroku again.
+
 
 ### Ideas
 
